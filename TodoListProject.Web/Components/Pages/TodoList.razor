@@ -1,0 +1,66 @@
+﻿@page "/todolist"
+@rendermode InteractiveServer
+<PageTitle>Todo</PageTitle>
+
+<div class="background-grad p-5 m-5, body">
+    <div class="alert alert-warning" role="alert">
+        <h3 style="font-family:'Segoe UI'" class="text-center">Todo List</h3>
+    </div>
+
+    <div class="d-grid gap-2">
+        <input class="form-control form-control-lg" type="text" @bind="newtoDoItem" />
+        <button class="btn btn-light" @onclick="addtoDoItem">Ekle</button>
+    </div>
+
+
+    <hr />
+
+
+    <ol class="list-group">
+        @foreach (string toDoItem in toDoList)
+        {
+            <li class="list-group-item">
+                @toDoItem <button class="btn btn-danger p-2 m-2" @onclick="(() => deleteTodoItem(toDoItem))">
+                    <span class="oi oi-delete" />
+                </button>
+            </li>
+
+        }
+    </ol>
+</div>
+
+<style type="text/css">
+    .background-grad {
+        background-color: #FFE53B;
+        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+    }
+    .body{
+        background-size: cover;
+        background-position: center top;
+    }
+    
+</style>
+
+
+
+@code {
+    List<string> toDoList = new() { "1. deneme", "2. deneme" };
+    string newtoDoItem = "";
+
+
+
+    void addtoDoItem()
+    {
+        if (string.IsNullOrWhiteSpace(newtoDoItem) == false)
+        {
+            toDoList.Add(newtoDoItem);
+            newtoDoItem = "";
+        }
+    }
+
+    void deleteTodoItem(string todoItemToDelete)
+    {
+        toDoList.Remove(todoItemToDelete);
+    }
+
+}
